@@ -32,8 +32,8 @@ public interface ITransferenciaRepository extends JpaRepository<Transferencia, I
     Page<Transferencia> findAllByDataFinal(LocalDate dataFinal, Pageable pageable);
 
     @Query(value = "select * from transferencia " +
-            "WHERE nome_operador_transacao = :nomeOperadorTransacao",
-            countQuery = "SELECT count(*) FROM transferencia where nome_operador_transacao = :nomeOperadorTransacao",
+            "WHERE upper(nome_operador_transacao) like upper(:nomeOperadorTransacao)",
+            countQuery = "SELECT count(*) FROM transferencia where upper(nome_operador_transacao) like upper(:nomeOperadorTransacao)",
             nativeQuery = true)
     Page<Transferencia> findAllByNomeOperadorTransacao(String nomeOperadorTransacao, Pageable pageable);
 
@@ -44,22 +44,22 @@ public interface ITransferenciaRepository extends JpaRepository<Transferencia, I
     Page<Transferencia> findAllBetweenDataInicialAndDataFim(LocalDate dataInicial, LocalDate dataFim, Pageable pageable);
 
     @Query(value = "select * from transferencia " +
-            "WHERE cast(data_transferencia as Date) >= :dataInicial and nome_operador_transacao = :nomeOperadorTransacao",
-            countQuery = "SELECT count(*) FROM transferencia WHERE cast(data_transferencia as Date) >= :dataInicial and nome_operador_transacao = :nomeOperadorTransacao",
+            "WHERE cast(data_transferencia as Date) >= :dataInicial and upper(nome_operador_transacao) like upper(:nomeOperadorTransacao)",
+            countQuery = "SELECT count(*) FROM transferencia WHERE cast(data_transferencia as Date) >= :dataInicial and upper(nome_operador_transacao) like upper(:nomeOperadorTransacao)",
             nativeQuery = true)
     Page<Transferencia> findAllByDataInicialAndNomeOperadorTransacao(LocalDate dataInicial, String nomeOperadorTransacao, Pageable pageable);
 
     @Query(value = "select * from transferencia " +
-            "WHERE cast(data_transferencia as Date) <= :dataFim and nome_operador_transacao = :nomeOperadorTransacao",
+            "WHERE cast(data_transferencia as Date) <= :dataFim and upper(nome_operador_transacao) like upper(:nomeOperadorTransacao)",
             countQuery = "SELECT count(*) FROM transferencia" +
-                    " WHERE cast(data_transferencia as Date) <= :dataFim and nome_operador_transacao = :nomeOperadorTransacao",
+                    " WHERE cast(data_transferencia as Date) <= :dataFim and upper(nome_operador_transacao) like upper(:nomeOperadorTransacao)",
             nativeQuery = true)
     Page<Transferencia> findAllByDataFinalAndNomeOperadorTransacao(LocalDate dataFim, String nomeOperadorTransacao, Pageable pageable);
 
     @Query(value = "select * from transferencia " +
-            "WHERE cast(data_transferencia as Date) BETWEEN :dataInicio and :dataFim and nome_operador_transacao = :nomeOperadorTransacao",
+            "WHERE cast(data_transferencia as Date) BETWEEN :dataInicio and :dataFim and upper(nome_operador_transacao) like upper(:nomeOperadorTransacao)",
             countQuery = "SELECT count(*) FROM transferencia" +
-                    "WHERE cast(data_transferencia as Date) BETWEEN :dataInicio and :dataFim and nome_operador_transacao = :nomeOperadorTransacao",
+                    "WHERE cast(data_transferencia as Date) BETWEEN :dataInicio and :dataFim and upper(nome_operador_transacao) like upper(:nomeOperadorTransacao)",
             nativeQuery = true)
     Page<Transferencia> findAllBetweenDataInicialAndDataFinalWithNomeOperadorTransacao(LocalDate dataInicio,LocalDate dataFim, String nomeOperadorTransacao, Pageable pageable);
 

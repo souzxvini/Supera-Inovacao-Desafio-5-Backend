@@ -41,7 +41,7 @@ public class TransferenciaService {
         }
         //apenas nome do operador no filtro
         if (dataInicio.isEmpty() && dataFim.isEmpty() && !nomeOperadorTransacao.isEmpty()) {
-            return iTransferenciaRepository.findAllByNomeOperadorTransacao(nomeOperadorTransacao, pageable);
+            return iTransferenciaRepository.findAllByNomeOperadorTransacao("%" + nomeOperadorTransacao + "%", pageable);
         }
         //data inicio e data fim no filtro
         if (!dataInicio.isEmpty() && !dataFim.isEmpty() && nomeOperadorTransacao.isEmpty()) {
@@ -57,14 +57,14 @@ public class TransferenciaService {
         if (!dataInicio.isEmpty() && dataFim.isEmpty() && !nomeOperadorTransacao.isEmpty()) {
             return iTransferenciaRepository.findAllByDataInicialAndNomeOperadorTransacao(
                     DateUtil.toLocalDate(dataInicio, "dd-MM-yyyy"),
-                    nomeOperadorTransacao, pageable
+                    "%" + nomeOperadorTransacao + "%", pageable
             );
         }
         //data final e nome operador no filtro
         if (dataInicio.isEmpty() && !dataFim.isEmpty() && !nomeOperadorTransacao.isEmpty()) {
             return iTransferenciaRepository.findAllByDataFinalAndNomeOperadorTransacao(
                     DateUtil.toLocalDate(dataFim, "dd-MM-yyyy"),
-                    nomeOperadorTransacao,
+                    "%" + nomeOperadorTransacao + "%",
                     pageable
             );
         }
@@ -76,7 +76,7 @@ public class TransferenciaService {
             return iTransferenciaRepository.findAllBetweenDataInicialAndDataFinalWithNomeOperadorTransacao(
                     DateUtil.toLocalDate(dataInicio, "dd-MM-yyyy"),
                     DateUtil.toLocalDate(dataFim, "dd-MM-yyyy"),
-                    nomeOperadorTransacao,
+                    "%" + nomeOperadorTransacao + "%",
                     pageable
             );
         }
