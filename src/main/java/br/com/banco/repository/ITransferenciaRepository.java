@@ -50,7 +50,7 @@ public interface ITransferenciaRepository extends JpaRepository<Transferencia, I
     Page<Transferencia> findAllByDataInicialAndNomeOperadorTransacao(LocalDate dataInicial, String nomeOperadorTransacao, Pageable pageable);
 
     @Query(value = "select * from transferencia " +
-            "WHERE cast(data_transferencia as Date) >= :dataFim and nome_operador_transacao = :nomeOperadorTransacao",
+            "WHERE cast(data_transferencia as Date) <= :dataFim and nome_operador_transacao = :nomeOperadorTransacao",
             countQuery = "SELECT count(*) FROM transferencia" +
                     " WHERE cast(data_transferencia as Date) <= :dataFim and nome_operador_transacao = :nomeOperadorTransacao",
             nativeQuery = true)
