@@ -117,7 +117,7 @@ public class TransferenciaService {
         //apenas nome do operador no filtro
         if (dataInicio.isEmpty() && dataFim.isEmpty() && !nomeOperadorTransacao.isEmpty()) {
             List<Transferencia> allTransferencias = iTransferenciaRepository.findTransferencias();
-            List<Transferencia> transferenciasFiltro =iTransferenciaRepository.findAllByNomeOperadorTransacao(nomeOperadorTransacao);
+            List<Transferencia> transferenciasFiltro =iTransferenciaRepository.findAllByNomeOperadorTransacao("%" + nomeOperadorTransacao + "%");
 
             return SaldoResponse.builder()
                     .valorTotal(calcularSaldo(allTransferencias))
@@ -145,7 +145,7 @@ public class TransferenciaService {
             List<Transferencia> allTransferencias = iTransferenciaRepository.findTransferencias();
             List<Transferencia> transferenciasFiltro = iTransferenciaRepository.findAllByDataInicialAndNomeOperadorTransacao(
                     DateUtil.toLocalDate(dataInicio, "dd-MM-yyyy"),
-                    nomeOperadorTransacao
+                    "%" + nomeOperadorTransacao + "%"
             );
 
             return SaldoResponse.builder()
@@ -159,7 +159,7 @@ public class TransferenciaService {
             List<Transferencia> allTransferencias = iTransferenciaRepository.findTransferencias();
             List<Transferencia> transferenciasFiltro = iTransferenciaRepository.findAllByDataFinalAndNomeOperadorTransacao(
                     DateUtil.toLocalDate(dataFim, "dd-MM-yyyy"),
-                    nomeOperadorTransacao
+                    "%" + nomeOperadorTransacao + "%"
             );
 
             return SaldoResponse.builder()
@@ -176,7 +176,7 @@ public class TransferenciaService {
             List<Transferencia> transferenciasFiltro = iTransferenciaRepository.findAllBetweenDataInicialAndDataFinalWithNomeOperadorTransacao(
                     DateUtil.toLocalDate(dataInicio, "dd-MM-yyyy"),
                     DateUtil.toLocalDate(dataFim, "dd-MM-yyyy"),
-                    nomeOperadorTransacao
+                    "%" + nomeOperadorTransacao + "%"
             );
 
             return SaldoResponse.builder()

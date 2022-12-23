@@ -82,7 +82,7 @@ public interface ITransferenciaRepository extends JpaRepository<Transferencia, I
     List<Transferencia> findAllByDataFinal(LocalDate dataFinal);
 
     @Query(value = "select * from transferencia " +
-            "WHERE nome_operador_transacao = :nomeOperadorTransacao",nativeQuery = true)
+            "WHERE upper(nome_operador_transacao) like upper(:nomeOperadorTransacao)",nativeQuery = true)
     List<Transferencia> findAllByNomeOperadorTransacao(String nomeOperadorTransacao);
 
     @Query(value = "select * from transferencia " +
@@ -90,15 +90,15 @@ public interface ITransferenciaRepository extends JpaRepository<Transferencia, I
     List<Transferencia> findAllBetweenDataInicialAndDataFim(LocalDate dataInicial, LocalDate dataFim);
 
     @Query(value = "select * from transferencia " +
-            "WHERE cast(data_transferencia as Date) >= :dataInicial and nome_operador_transacao = :nomeOperadorTransacao", nativeQuery = true)
+            "WHERE cast(data_transferencia as Date) >= :dataInicial and upper(nome_operador_transacao) like upper(:nomeOperadorTransacao)", nativeQuery = true)
     List<Transferencia> findAllByDataInicialAndNomeOperadorTransacao(LocalDate dataInicial, String nomeOperadorTransacao);
 
     @Query(value = "select * from transferencia " +
-            "WHERE cast(data_transferencia as Date) >= :dataFim and nome_operador_transacao = :nomeOperadorTransacao",nativeQuery = true)
+            "WHERE cast(data_transferencia as Date) >= :dataFim and upper(nome_operador_transacao) like upper(:nomeOperadorTransacao)",nativeQuery = true)
     List<Transferencia> findAllByDataFinalAndNomeOperadorTransacao(LocalDate dataFim, String nomeOperadorTransacao);
 
     @Query(value = "select * from transferencia " +
-            "WHERE cast(data_transferencia as Date) BETWEEN :dataInicio and :dataFim and nome_operador_transacao = :nomeOperadorTransacao",nativeQuery = true)
+            "WHERE cast(data_transferencia as Date) BETWEEN :dataInicio and :dataFim and upper(nome_operador_transacao) like upper(:nomeOperadorTransacao)",nativeQuery = true)
     List<Transferencia> findAllBetweenDataInicialAndDataFinalWithNomeOperadorTransacao(LocalDate dataInicio,LocalDate dataFim, String nomeOperadorTransacao);
 
 
